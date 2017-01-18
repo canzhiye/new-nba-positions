@@ -15,7 +15,8 @@ team_ids = [1610612737, 1610612738, 1610612739, 1610612740, 1610612741, 16106127
 
 seasons = ['2016-17', '2015-16', '2014-15', '2013-14', '2012-13', '2011-12', '2010-11', '2009-10', '2008-09', '2007-08', '2006-07', '2005-06', '2004-05', '2003-04', '2002-03', '2001-02']
 
-for season in seasons:
+
+def index_season(season):
     # team_ids = [1610612737]
     teams_to_games = {}
 
@@ -54,6 +55,9 @@ for season in seasons:
                 except psycopg2.IntegrityError as e:
                     conn.rollback()
                     print(e)
+
+tp = ThreadPool(16)
+tp.map(index_season, seasons)
 
 cur.close()
 conn.close()
